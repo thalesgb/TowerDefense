@@ -5177,15 +5177,15 @@ MonoBehaviour:
     upgradePrefab: {fileID: 8979326513781679798, guid: 0e7b1c3b54d2678429c7389a6167ced9,
       type: 3}
     cost: 100
-    upgradeCost: 50
-    sellCost: 0
+    upgradeCost: 200
+    sellCost: 50
   missileLaucher:
     prefab: {fileID: 560752842096522113, guid: 957bf117523508341aff0fa65f008707, type: 3}
     upgradePrefab: {fileID: 560752842096522113, guid: 957bf117523508341aff0fa65f008707,
       type: 3}
     cost: 300
-    upgradeCost: 150
-    sellCost: 0
+    upgradeCost: 450
+    sellCost: 150
 --- !u!1001 &457770144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10890,12 +10890,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa2ac46eb210a24da7fc5b6d56e84a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4000012535691032, guid: 9aad9de7cbca6d84b82891c3a1e63e34,
-    type: 3}
+  waves:
+  - enemy: {fileID: 8365973814023084621, guid: 9aad9de7cbca6d84b82891c3a1e63e34, type: 3}
+    count: 5
+    rate: 1
+  - enemy: {fileID: 1714500534231143841, guid: 92d97a52451086842b30bbcfebc6fe76, type: 3}
+    count: 10
+    rate: 2
+  - enemy: {fileID: 6057049562411829525, guid: ece3086328e1f7c449ad6bddb089f9df, type: 3}
+    count: 20
+    rate: 2
+  - enemy: {fileID: 5422408300299053397, guid: 75d0b3a47afe5bc4281f2f58a716c238, type: 3}
+    count: 30
+    rate: 2
   spawnPoint: {fileID: 1779041216}
-  timeBetweenWaves: 5
+  timeBetweenWaves: 2
   waveCountdownText: {fileID: 912278711}
-  countdown: 2
+  countdown: 5
 --- !u!4 &873111392
 Transform:
   m_ObjectHideFlags: 0
@@ -10942,7 +10953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMoney: 400
-  startLives: 5
+  startLives: 20
 --- !u!114 &873111395
 MonoBehaviour:
   m_ObjectHideFlags: 0

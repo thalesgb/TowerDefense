@@ -5,40 +5,63 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-   public Transform enemyPrefab;
-   public Transform spawnPoint;
-   public float timeBetweenWaves = 30f;
-   public Text waveCountdownText;
-    public float countdown = 10f;
-    private int waveNumber = 1;
-   void Update(){
-       if(countdown <= 0f){
-           StartCoroutine(SpawnWave());
-           countdown = timeBetweenWaves;
-       }
-       
-       countdown -= Time.deltaTime;
+    public static int EnemiesAlive = 0;
 
-       countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
- //Mathf.Round(countdown).ToString()
-        waveCountdownText.text = string.Format("{0:00.00}",countdown);
-          }
+    public Wave[] waves;
 
-   IEnumerator SpawnWave(){
-       PlayerStats.Rounds++;
-       Debug.Log("Wave Incomming!");
-      int numOfEnemies = waveNumber * waveNumber +1;
+    public Transform spawnPoint;
 
-    for (int i = 0; i < numOfEnemies; i++)
+    public float timeBetweenWaves = 2f;
+
+    public Text waveCountdownText;
+
+    public float countdown = 5f;
+
+    private int waveIndex = 0;
+
+    void Update()
     {
-        SpawnEnemy();
-        yield return new WaitForSeconds(0.2f);
+        if (EnemiesAlive > 0)
+        {
+            return;
+        }
+
+        if (countdown <= 0f)
+        {
+            StartCoroutine(SpawnWave());
+            countdown = timeBetweenWaves;
+            return;
+        }
+
+        countdown -= Time.deltaTime;
+
+        countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+
+        waveCountdownText.text = string.Format("{0:00.00}", countdown);
     }
-       waveNumber++;
-   }
 
-    void SpawnEnemy(){
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+    IEnumerator SpawnWave()
+    {
+        PlayerStats.Rounds++;
+        
+        Wave wave =  waves[waveIndex];
 
+        for (int i = 0; i < wave.count; i++)
+        {
+            SpawnEnemy(wave.enemy);
+            yield return new WaitForSeconds(1f / wave.rate);
+        }
+        waveIndex++;
+
+        if(waveIndex == waves.Length){
+            Debug.Log("WON");
+            this.enabled = false;
+        }
+    }
+
+    void SpawnEnemy(GameObject enemy)
+    {
+        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        EnemiesAlive++;
     }
 }
